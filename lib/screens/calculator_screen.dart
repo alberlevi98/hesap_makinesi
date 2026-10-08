@@ -164,26 +164,34 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       padding: const EdgeInsets.fromLTRB(12, 0, 12, 6),
       child: Row(
         children: [
-          Flexible(
-            child: ActionChip(
-              key: const Key('modeToggle'),
-              avatar: Icon(settings.scientific ? Icons.functions : Icons.calculate_outlined, size: 18),
-              label: Text(
-                settings.scientific ? l.modeScientific : l.modeBasic,
-                overflow: TextOverflow.ellipsis,
-              ),
-              onPressed: () => settings.setScientific(!settings.scientific),
+          // Chips take the remaining width (and shrink for long labels);
+          // the backspace button stays at the trailing edge above ÷.
+          Expanded(
+            child: Row(
+              children: [
+                Flexible(
+                  child: ActionChip(
+                    key: const Key('modeToggle'),
+                    avatar: Icon(settings.scientific ? Icons.functions : Icons.calculate_outlined, size: 18),
+                    label: Text(
+                      settings.scientific ? l.modeScientific : l.modeBasic,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    onPressed: () => settings.setScientific(!settings.scientific),
+                  ),
+                ),
+                if (settings.scientific) ...[
+                  const SizedBox(width: 8),
+                  ActionChip(
+                    key: const Key('angleToggle'),
+                    label: Text(settings.angleMode == AngleMode.degrees ? 'DEG' : 'RAD'),
+                    onPressed: () => settings.setAngleMode(
+                        settings.angleMode == AngleMode.degrees ? AngleMode.radians : AngleMode.degrees),
+                  ),
+                ],
+              ],
             ),
           ),
-          const SizedBox(width: 8),
-          if (settings.scientific)
-            ActionChip(
-              key: const Key('angleToggle'),
-              label: Text(settings.angleMode == AngleMode.degrees ? 'DEG' : 'RAD'),
-              onPressed: () => settings.setAngleMode(
-                  settings.angleMode == AngleMode.degrees ? AngleMode.radians : AngleMode.degrees),
-            ),
-          const Spacer(),
           const SizedBox(width: 8),
           IconButton.filledTonal(
             key: const Key('backspace'),
