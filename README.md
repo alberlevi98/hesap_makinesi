@@ -45,6 +45,17 @@ flutter build appbundle        # Play Store için: build/app/outputs/bundle/rele
 4. **Çeviriler:** Yayından önce her dilin anadili konuşan biri tarafından kontrol edilmesi önerilir, özellikle Bengalce, Urduca ve Hintçe.
 5. **iOS:** Uygulama adı her dilde "Calculator" olarak görünür. iOS'ta da dile göre değişen ad için Xcode'da `InfoPlist.strings` eklenmelidir.
 
+## Web sitesi ve app-ads.txt (Vercel)
+
+`website/` klasörü, Play Store'daki geliştirici web sitesi olarak kullanılacak statik sitedir. AdMob için gereken `app-ads.txt` dosyası sitenin kökünde yayınlanır (`/app-ads.txt`). Kök dizindeki `vercel.json`, Vercel'e derleme yapmadan bu klasörü yayınlamasını söyler.
+
+1. <https://vercel.com/new> adresinde bu depoyu içe aktar ve ayarları değiştirmeden **Deploy** de.
+2. Yayından sonra `https://<proje-adı>.vercel.app/app-ads.txt` adresini açıp dosyanın göründüğünü kontrol et.
+3. Play Console'da *Mağaza varlığı → Mağaza ayarları → Web sitesi* alanına bu adresin kökünü (`https://<proje-adı>.vercel.app`) yaz. Alan adı, app-ads.txt'nin yayınlandığı alan adıyla birebir aynı olmalı.
+4. AdMob'da *Uygulamalar → app-ads.txt* sayfasından taramayı başlat.
+
+Yayıncı kimliği değişirse `website/app-ads.txt` dosyasını güncelle.
+
 ## Çevirileri düzenleme
 
 Metinler `tool/l10n/<dil>.py` dosyalarında. Bir metni değiştirdikten sonra şunları çalıştır:
